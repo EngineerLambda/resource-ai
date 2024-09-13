@@ -1,0 +1,4 @@
+psycopg2
+langchain_google_genai
+fastapi[all]
+uvicorn
