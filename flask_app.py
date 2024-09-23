@@ -173,7 +173,7 @@ The query must not contain ``` or sql or python at the begining, just texts
 @app.get("/ask_ai")
 def get_response(query: str):
     sql_prompt = template.format(query=query, tables=tables)
-    sql_llm = GoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=api_key)
+    sql_llm = GoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=api_key)
 
     # Genenerate explanation
     compare_llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=api_key)
@@ -183,6 +183,12 @@ def get_response(query: str):
     query: {query}
     sql_code: {sql_code}
     sql_result: {sql_result}
+    If the answer to the question is not in the sql result, say that you could not process it, that the user should word the better, respond professionally.
+    Do not mention any technical term in your respoonse, like code, sql, result, etc. use data instead, and don't use personal pronouns like we, our, ...
+    And be aware of what the values represent. So, when asked to compare any two variables or talk about a variable, by rating and you see numerical values like (2, 3.0, 5.0, and so on), use the schema below:
+    0 - 3 being Low
+    4 - 6 being Average
+    7 - 10 being High
     """
 
     generated_query = sql_llm(sql_prompt)[6:-3] # filter out "```sql ... ```" in the query generated
