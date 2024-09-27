@@ -167,7 +167,6 @@ table LgaResource
   collectionEnd DateTime?
 
   @@index([resourceId, lgaId])```
-The query must not contain ``` or sql or python at the begining, just texts
 """
 
 @app.get("/ask_ai")
